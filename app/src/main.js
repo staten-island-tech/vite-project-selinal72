@@ -7,7 +7,7 @@ document.querySelector("#app").innerHTML = `
       <img src="spotify.png" class="logo" alt="Vite logo" />
     </a>
     
-    <h1>Hello Vite!</h1>
+    <h1>Selina's Super Cool Playlist Builder!</h1>
     <div class="card">
       <button id="counter" type="button"></button>
     </div>
