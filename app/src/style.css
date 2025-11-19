@@ -55,8 +55,38 @@ h1 {
   filter: drop-shadow(0 0 2em #f7df1eaa);
 }
 
+.cards-container {
+  background-color: white;
+  min-width: 250px;
+  width: 22%;
+  height: 20rem;
+  margin: 3rem 0;
+  border: 2px solid white;
+  border-radius: 10px;
+  box-shadow: white 0px 1px 40px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  transition: all 0.5s;
+}
+
 .card {
-  padding: 2em;
+  background-color: white;
+  min-width: 250px;
+  width: 22%;
+  height: 20rem;
+  margin: 3rem 0;
+  border: 2px solid white;
+  border-radius: 10px;
+  box-shadow: white 0px 1px 40px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  transition: all 0.5s;
 }
 
 .read-the-docs {
