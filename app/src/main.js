@@ -1,45 +1,43 @@
 import "./style.css";
 import { setupCounter } from "./counter.js";
 
-let songs = [
+/* let songs = [
   {
     title: "Mr. Incorrect",
     artists: ["Malcolm Todd"],
     genres: ["Alternative", "Indie", "R&B"],
     cover: "sweetboy.jpg",
+    alt: "sweetboy album",
   },
   {
     title: "Magic Johnson",
     artists: ["ian"],
     genres: ["Hip Hop", "Rap"],
     cover: "valedictorian.jpg",
+    alt: "valedictorian album",
   },
   {
     title: "Bags",
     artists: ["Clairo"],
     genres: ["Alternative", "Bedroom", "Indie"],
     cover: "immunity.jpg",
+    alt: "immunity album",
   },
   {
     title: "Bleed (feat. Omar Apollo)",
     artists: ["Malcolm Todd", "Omar Apollo"],
     genres: ["Alternative", "Bedroom", "Indie"],
     cover: "malcolmtodd.jpg",
+    alt: "malcolm todd album",
   },
   {
     title: "Tomioka",
     artists: ["Jay Eazy"],
     genres: ["Hip Hop", "Rap"],
     cover: "tomioka.jpg",
+    alt: "tomioka album",
   },
-];
-
-const DOMSelectors = {
-  title: document.getElementById("title"),
-  artists: document.getElementById("artists"),
-  genres: document.getElementById("genres"),
-  cover: document.getElementById("cover"),
-};
+]; */
 
 document.querySelector("#app").innerHTML = `
   <div>
@@ -54,9 +52,38 @@ document.querySelector("#app").innerHTML = `
   </div>
 `;
 
+const DOMSelectors = {
+  title: document.getElementById("title"),
+  artist: document.getElementById("artist"),
+  album: document.getElementById("album"),
+  url: document.getElementById("url"),
+};
+
+document.getElementById("form").addEventListener("submit", function (e) {
+  e.preventDefault(); // stops page from refreshing
+  let song = {
+    title: document.getElementById("title").value,
+    artist: document.getElementById("artist").value,
+    album: document.getElementById("album").value,
+    url: document.getElementById("url").value,
+  };
+  inject(song); // add to the page
+  clearFields(); // reset form inputs
+});
+
 function inject(song) {
   const container = document.querySelector(".cart-container");
-  container.insertAdjacentHTML("afterbegin");
+  container.insertAdjacentHTML(
+    "afterbegin",
+    `<div class="card" data-title=${song.title}>
+      <img class="card-img" src="${song.cover}" alt="oops!"/>
+      <h2 class="card-header">${song.title}</h2>
+      <h3 class="card-seller">${song.album}</h3>
+      <h3 class="card-region">${item.region}</h3>
+      <h4 class="card-price">${item.price} mora</h4>
+      <button type="button" class="buy-button">add to cart</button>
+    </div>`
+  );
 }
 
 /* songs.forEach((song) => {}); */
