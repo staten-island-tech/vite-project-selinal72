@@ -45,7 +45,7 @@ document.querySelector("#app").innerHTML = `
       <img src="spotify.png" class="logo" alt="Vite logo" />
     </a>
     <h1>Selina's Super Cool Playlist Builder!</h1>
-    <div class="cards-container"></div>
+    <div class="container"></div>
     <p class="read-the-docs">
       Click on the Spotify logo to view a playlist reccomendation
     </p>
@@ -59,6 +59,19 @@ const DOMSelectors = {
   url: document.getElementById("url"),
 };
 
+function inject(song) {
+  const container = document.querySelector(".container");
+  container.insertAdjacentHTML(
+    "afterbegin",
+    `<div class="card" data-title=${song.title}>
+      <img class="card-img" src="${song.cover}" alt="oops!"/>
+      <h2 class="card-header">${song.title}</h2>
+      <h3 class="card-seller">${song.album}</h3>
+      <button type="button" class="remove-button">remove song</button>
+    </div>`
+  );
+}
+
 document.getElementById("form").addEventListener("submit", function (e) {
   e.preventDefault(); // stops page from refreshing
   let song = {
@@ -71,20 +84,9 @@ document.getElementById("form").addEventListener("submit", function (e) {
   clearFields(); // reset form inputs
 });
 
-function inject(song) {
-  const container = document.querySelector(".cart-container");
-  container.insertAdjacentHTML(
-    "afterbegin",
-    `<div class="card" data-title=${song.title}>
-      <img class="card-img" src="${song.cover}" alt="oops!"/>
-      <h2 class="card-header">${song.title}</h2>
-      <h3 class="card-seller">${song.album}</h3>
-      <h3 class="card-region">${item.region}</h3>
-      <h4 class="card-price">${item.price} mora</h4>
-      <button type="button" class="buy-button">add to cart</button>
-    </div>`
-  );
-}
+/* function removeAlbum(event) {
+  event.target.parentElement.remove();
+} */
 
 /* songs.forEach((song) => {}); */
 
