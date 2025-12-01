@@ -55,6 +55,15 @@ h1 {
   filter: drop-shadow(0 0 2em #f7df1eaa);
 }
 
+.header {
+  width: 90vw;
+  margin: 2rem auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .container {
   width: 90vw;
   margin: 2rem auto;
@@ -79,6 +88,10 @@ h1 {
   align-items: center;
   justify-content: space-around;
   transition: all 0.5s;
+}
+
+.card-img {
+  width: 150px;
 }
 
 .read-the-docs {
