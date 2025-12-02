@@ -1,34 +1,39 @@
 import "./style.css";
-import { setupCounter } from "./counter.js";
+/* import { setupCounter } from "./counter.js"; */
 
 let songs = [
   {
     title: "Mr. Incorrect",
     artists: ["Malcolm Todd"],
+    album: "sweetboy",
     genres: ["Alternative", "Indie", "R&B"],
     cover: "sweetboy.jpg",
   },
   {
     title: "Magic Johnson",
     artists: ["ian"],
+    album: "valedictorian",
     genres: ["Hip Hop", "Rap"],
     cover: "valedictorian.jpg",
   },
   {
     title: "Bags",
     artists: ["Clairo"],
+    album: "immunity",
     genres: ["Alternative", "Bedroom", "Indie"],
     cover: "immunity.jpg",
   },
   {
     title: "Bleed (feat. Omar Apollo)",
     artists: ["Malcolm Todd", "Omar Apollo"],
+    album: "malcolm todd",
     genres: ["Alternative", "Bedroom", "Indie"],
     cover: "malcolmtodd.png",
   },
   {
     title: "Tomioka",
     artists: ["Jay Eazy"],
+    album: "tomioka",
     genres: ["Hip Hop", "Rap"],
     cover: "tomioka.jpg",
   },
@@ -53,7 +58,7 @@ document.querySelector("#app").innerHTML = `
           <label for="album">Album Name: </label>
           <input type="text" name="album" id="album" required />
           <label for="img">Album Cover URL: </label>
-          <input type="text" name="artist" id="title" required />
+          <input type="text" name="url" id="url" required />
         </div>
         <div class="songform">
           <input type="submit" value="Submit" />
@@ -77,8 +82,9 @@ function inject(song) {
     "afterbegin",
     `<div class="card" data-title=${song.title}>
       <img class="card-img" src="${song.cover}" alt="oops!"/>
-      <h2 class="card-header">${song.title}</h2>
-      <h3 class="card-seller">${song.album}</h3>
+      <h2 class="card-header">${song.title} by ${song.artists}</h2>
+      <h4 class="card-album">${song.album}</h4>
+      <h4 class="card-genres">${song.genres}</h4>
       <button type="button" class="remove-button">remove song</button>
     </div>`
   );
