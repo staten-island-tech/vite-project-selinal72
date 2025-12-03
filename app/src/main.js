@@ -5,37 +5,30 @@ let songs = [
   {
     title: "Mr. Incorrect",
     artists: ["Malcolm Todd"],
-    album: "sweetboy",
+    album: "Sweetboy",
     genres: ["Alternative", "Indie", "R&B"],
-    cover: "sweetboy.jpg",
+    url: "https://m.media-amazon.com/images/I/814aISls55L._UF1000,1000_QL80_.jpg",
   },
   {
     title: "Magic Johnson",
     artists: ["ian"],
-    album: "valedictorian",
+    album: "Valedictorian",
     genres: ["Hip Hop", "Rap"],
-    cover: "valedictorian.jpg",
+    url: "https://i.scdn.co/image/ab67616d0000b273f624d169356e083678be21f2",
   },
   {
     title: "Bags",
     artists: ["Clairo"],
-    album: "immunity",
+    album: "Immunity",
     genres: ["Alternative", "Bedroom", "Indie"],
-    cover: "immunity.jpg",
+    url: "https://i.scdn.co/image/ab67616d0000b27333ccb60f9b2785ef691b2fbc",
   },
   {
     title: "Bleed (feat. Omar Apollo)",
     artists: ["Malcolm Todd", "Omar Apollo"],
-    album: "malcolm todd",
+    album: "Malcolm Todd",
     genres: ["Alternative", "Bedroom", "Indie"],
-    cover: "malcolmtodd.png",
-  },
-  {
-    title: "Tomioka",
-    artists: ["Jay Eazy"],
-    album: "tomioka",
-    genres: ["Hip Hop", "Rap"],
-    cover: "tomioka.jpg",
+    url: "https://upload.wikimedia.org/wikipedia/en/b/b3/Malcolm_Todd_cover.png",
   },
 ];
 
@@ -45,18 +38,20 @@ document.querySelector("#app").innerHTML = `
       <img src="spotify.png" class="logo" alt="Vite logo" />
     </a>
     <h1>Selina's Super Cool Playlist Builder!</h1>
-    <div class="header">
-      <p class="read-the-docs">
+    <p class="read-the-docs">
         Click on the Spotify logo to view a playlist reccomendation
       </p>
+    <div class="header">
       <form>
         <div class="songform">
           <label for="title">Song Title: </label>
           <input type="text" name="title" id="title" required />
-          <label for="artist">Main Artist: </label>
-          <input type="text" name="artist" id="artist" required />
+          <label for="artists">Main Artist: </label>
+          <input type="text" name="artists" id="artists" required />
           <label for="album">Album Name: </label>
           <input type="text" name="album" id="album" required />
+          <label for="genres">Genres: </label>
+          <input type="text" name="genres" id="genres" required />
           <label for="img">Album Cover URL: </label>
           <input type="text" name="url" id="url" required />
         </div>
@@ -71,8 +66,9 @@ document.querySelector("#app").innerHTML = `
 
 const DOMSelectors = {
   title: document.getElementById("title"),
-  artist: document.getElementById("artist"),
+  artists: document.getElementById("artists"),
   album: document.getElementById("album"),
+  genres: document.getElementById("genres"),
   url: document.getElementById("url"),
 };
 
@@ -81,7 +77,7 @@ function inject(song) {
   container.insertAdjacentHTML(
     "afterbegin",
     `<div class="card" data-title=${song.title}>
-      <img class="card-img" src="${song.cover}" alt="oops!"/>
+      <img class="card-img" src="${song.url}" alt="oops!"/>
       <h2 class="card-header">${song.title} by ${song.artists}</h2>
       <h4 class="card-album">${song.album}</h4>
       <h4 class="card-genres">${song.genres}</h4>
@@ -96,8 +92,9 @@ document.getElementById("form").addEventListener("submit", function (e) {
   e.preventDefault(); // stops page from refreshing
   let song = {
     title: document.getElementById("title").value,
-    artist: document.getElementById("artist").value,
+    artists: document.getElementById("artists").value,
     album: document.getElementById("album").value,
+    genres: document.getElementById("genres"),
     url: document.getElementById("url").value,
   };
   inject(song); // add to the page
