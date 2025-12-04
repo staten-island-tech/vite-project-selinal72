@@ -32,7 +32,7 @@ let songs = [
   },
 ];
 
-document.querySelector("#app").innerHTML = `
+/* document.querySelector("#app").innerHTML = `
   <div>
     <a href="https://open.spotify.com/playlist/7lURg77utY7QX9xasBrUMs?si=flNQ_9c6RGmG705Rlp32Zg" target="_blank">
       <img src="spotify.png" class="logo" alt="Vite logo" />
@@ -60,9 +60,9 @@ document.querySelector("#app").innerHTML = `
         </div>
       </form>
     </div>
-    <div class="container">
+    <div class="container"></div>
   </div>
-`;
+`; */
 
 const DOMSelectors = {
   title: document.getElementById("title"),
@@ -70,11 +70,12 @@ const DOMSelectors = {
   album: document.getElementById("album"),
   genres: document.getElementById("genres"),
   url: document.getElementById("url"),
+  display: document.getElementById("container"),
 };
 
 function inject(song) {
-  const container = document.querySelector(".container");
-  container.insertAdjacentHTML(
+  /* const container = document.querySelector(".container"); */
+  DOMSelectors.display.insertAdjacentHTML(
     "afterbegin",
     `<div class="card" data-title=${song.title}>
       <img class="card-img" src="${song.url}" alt="oops!"/>
@@ -88,13 +89,18 @@ function inject(song) {
 
 songs.forEach((song) => inject(song));
 
+function clearFields() {
+  const inputs = document.getElementsByClassName("input");
+  inputs.innerHTML = "";
+}
+
 document.getElementById("form").addEventListener("submit", function (e) {
   e.preventDefault(); // stops page from refreshing
   let song = {
     title: document.getElementById("title").value,
     artists: document.getElementById("artists").value,
     album: document.getElementById("album").value,
-    genres: document.getElementById("genres"),
+    genres: document.getElementById("genres").value,
     url: document.getElementById("url").value,
   };
   inject(song); // add to the page

@@ -13,7 +13,50 @@
     />
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <a
+        href="https://open.spotify.com/playlist/7lURg77utY7QX9xasBrUMs?si=flNQ_9c6RGmG705Rlp32Zg"
+        target="_blank"
+      >
+        <img src="spotify.png" class="logo" alt="Vite logo" />
+      </a>
+      <h1>Selina's Super Cool Playlist Builder!</h1>
+      <p class="read-the-docs">
+        Click on the Spotify logo to view a playlist reccomendation
+      </p>
+      <div class="header">
+        <form id="form">
+          <div class="songform">
+            <label for="title">Song Title: </label>
+            <input type="text" name="title" id="title" class="input" />
+            <label for="artists">Main Artist: </label>
+            <input
+              type="text"
+              name="artists"
+              id="artists"
+              class="input"
+              required
+            />
+            <label for="album">Album Name: </label>
+            <input type="text" name="album" id="album" class="input" required />
+            <label for="genres">Genres: </label>
+            <input
+              type="text"
+              name="genres"
+              id="genres"
+              class="input"
+              required
+            />
+            <label for="img">Album Cover URL: </label>
+            <input type="text" name="url" id="url" class="input" required />
+          </div>
+          <div class="songform">
+            <input type="submit" value="Submit" />
+          </div>
+        </form>
+      </div>
+      <div class="container" id="container"></div>
+    </div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
