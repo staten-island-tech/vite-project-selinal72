@@ -92,8 +92,10 @@ h2 {
 .card-img {
   width: 150px;
 }
-.card:hover {
-  transform: scale(1.1);
+
+.remove {
+  color: #e192af;
+  font-size: 12px;
 }
 
 .read-the-docs {
@@ -133,8 +135,8 @@ button:focus-visible {
 }
 
 button.remove {
-  background:none;
-  border:none;
+  background: none;
+  border: none;
 }
 
 @media (prefers-color-scheme: dark) {

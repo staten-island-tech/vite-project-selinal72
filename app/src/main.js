@@ -83,7 +83,7 @@ function inject(song) {
       <h4 class="card-album">${song.album}</h4>
       <h4 class="card-genres">${song.genres}</h4>
       <button type="button" class="playlist-button">add to playlist</button>
-      <button id="remove">remove song</button>
+      <span onclick="this.parentElement.style.display = 'none';" class="remove">remove</span>
     </div>`
   );
 }
@@ -91,8 +91,8 @@ function inject(song) {
 songs.forEach((song) => inject(song));
 
 function clearFields() {
-  const inputs = document.getElementsByClassName("input");
-  inputs.innerHTML = ""; // prob not correct
+  const inputs = document.querySelectorAll(".input");
+  inputs.forEach((input) => (input.value = "")); // prob not correct
 }
 
 document.getElementById("form").addEventListener("submit", function (e) {
@@ -107,23 +107,5 @@ document.getElementById("form").addEventListener("submit", function (e) {
   inject(song); // add to the page
   clearFields(); // reset form inputs
 });
-
-function removeSong(event) {
-  event.target.parentElement.remove();
-}
-
-const button = document.getElementById("remove");
-button.addEventListener("click", function(x) {
-  removeSong(button);
-    // e is the event object
-    // e.target is the button element
-    // do stuff with them
-});
-
-/* function removeAlbum(event) {
-  event.target.parentElement.remove();
-} */
-
-/* songs.forEach((song) => {}); */
 
 /* setupCounter(document.querySelector("#counter")); */
