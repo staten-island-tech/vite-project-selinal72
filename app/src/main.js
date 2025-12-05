@@ -82,7 +82,8 @@ function inject(song) {
       <h2 class="card-header">${song.title} by ${song.artists}</h2>
       <h4 class="card-album">${song.album}</h4>
       <h4 class="card-genres">${song.genres}</h4>
-      <button type="button" class="remove-button">remove song</button>
+      <button type="button" class="playlist-button">add to playlist</button>
+      <button id="remove">remove song</button>
     </div>`
   );
 }
@@ -91,7 +92,7 @@ songs.forEach((song) => inject(song));
 
 function clearFields() {
   const inputs = document.getElementsByClassName("input");
-  inputs.innerHTML = "";
+  inputs.innerHTML = ""; // prob not correct
 }
 
 document.getElementById("form").addEventListener("submit", function (e) {
@@ -105,6 +106,18 @@ document.getElementById("form").addEventListener("submit", function (e) {
   };
   inject(song); // add to the page
   clearFields(); // reset form inputs
+});
+
+function removeSong(event) {
+  event.target.parentElement.remove();
+}
+
+const button = document.getElementById("remove");
+button.addEventListener("click", function(x) {
+  removeSong(button);
+    // e is the event object
+    // e.target is the button element
+    // do stuff with them
 });
 
 /* function removeAlbum(event) {

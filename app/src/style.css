@@ -76,7 +76,7 @@ h2 {
   background-color: white;
   min-width: 250px;
   width: 22%;
-  height: 25rem;
+  height: 30rem;
   margin: 3rem 0;
   border: 2px solid white;
   border-radius: 10px;
@@ -130,6 +130,11 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+button.remove {
+  background:none;
+  border:none;
 }
 
 @media (prefers-color-scheme: dark) {
