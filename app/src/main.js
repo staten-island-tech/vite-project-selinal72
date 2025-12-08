@@ -88,6 +88,17 @@ function inject(song) {
   );
 }
 
+function place(playlist) {
+  document.querySelector(".other-container").insertAdjacentHTML(
+    "afterbegin",
+    `<div class="card" data-title=${playlist.playtitle}>
+      <img class="card-img" src="${playlist.playurl}" alt="oops!"/>
+      <h2 class="card-header">${playlist.playtitle}</h2>
+      <span onclick="this.parentElement.style.display = 'none';" class="remove">remove</span>
+    </div>`
+  );
+}
+
 songs.forEach((song) => inject(song));
 
 function clearFields() {
@@ -95,7 +106,7 @@ function clearFields() {
   inputs.forEach((input) => (input.value = "")); // prob not correct
 }
 
-document.getElementById("form").addEventListener("submit", function (e) {
+document.getElementById("songform").addEventListener("submit", function (e) {
   e.preventDefault(); // stops page from refreshing
   let song = {
     title: document.getElementById("title").value,
@@ -108,4 +119,44 @@ document.getElementById("form").addEventListener("submit", function (e) {
   clearFields(); // reset form inputs
 });
 
+document
+  .getElementById("playlistform")
+  .addEventListener("submit", function (e) {
+    e.preventDefault(); // stops page from refreshing
+    let playlist = {
+      playtitle: document.getElementById("playtitle").value,
+      playurl: document.getElementById("playurl").value,
+    };
+    place(playlist); // add to the page
+    clearFields(); // reset form inputs
+  });
+
 /* setupCounter(document.querySelector("#counter")); */
+
+const list = [];
+
+function getSongs(event) {
+  //not needed unless we want filter etc.
+  cart.push({
+    name: event.closest(".card").getAttribute("data-title"),
+    price: event.closest(".card").getAttribute("data-price"),
+    quantity: 0,
+  });
+  document.querySelector(".list-container").innerHTML = "";
+  cart.forEach((product) => logCart(product));
+  pricing();
+}
+
+function attachListeners() {
+  const buttons = document.querySelectorAll(".playlist-button");
+  const btnArr = Array.from(buttons);
+  btnArr.forEach((btn) =>
+    btn.addEventListener("click", function (event) {
+      getCards(event.target);
+    })
+  );
+}
+
+document
+  .getElementById("playlist-button")
+  .addEventListener("click", makePlaylist);
