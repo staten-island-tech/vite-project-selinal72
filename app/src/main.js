@@ -82,7 +82,16 @@ function inject(song) {
       <h2 class="card-header">${song.title} by ${song.artists}</h2>
       <h4 class="card-album">${song.album}</h4>
       <h4 class="card-genres">${song.genres}</h4>
-      <button type="button" class="playlist-button">add to playlist</button>
+      <form action="/action_page.php">
+        <label for="cars">Choose a car:</label>
+        <select name="cars" id="cars">
+          <option value="volvo">Volvo</option>
+          <option value="saab">Saab</option>
+          <option value="opel">Opel</option>
+          <option value="audi">Audi</option>
+        </select>
+        <input type="submit" value="Submit">
+      </form>
       <span onclick="this.parentElement.style.display = 'none';" class="remove">remove</span>
     </div>`
   );
