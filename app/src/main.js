@@ -86,9 +86,6 @@ function inject(song) {
         <label for="cars">Choose a car:</label>
         <select name="cars" id="cars">
           <option value="volvo">Volvo</option>
-          <option value="saab">Saab</option>
-          <option value="opel">Opel</option>
-          <option value="audi">Audi</option>
         </select>
         <input type="submit" value="Submit">
       </form>
@@ -112,7 +109,7 @@ songs.forEach((song) => inject(song));
 
 function clearFields() {
   const inputs = document.querySelectorAll(".input");
-  inputs.forEach((input) => (input.value = "")); // prob not correct
+  inputs.forEach((input) => (input.value = ""));
 }
 
 document.getElementById("songform").addEventListener("submit", function (e) {
@@ -128,6 +125,12 @@ document.getElementById("songform").addEventListener("submit", function (e) {
   clearFields(); // reset form inputs
 });
 
+function addOption(playlist) {
+  document
+    .querySelector(".select")
+    .insertAdjacentHTML("afterbegin", `<option value="benz">benz</option>`);
+}
+
 document
   .getElementById("playlistform")
   .addEventListener("submit", function (e) {
@@ -138,11 +141,12 @@ document
     };
     place(playlist); // add to the page
     clearFields(); // reset form inputs
+    addOption();
   });
 
 /* setupCounter(document.querySelector("#counter")); */
 
-const list = [];
+/* const list = [];
 
 function getSongs(event) {
   //not needed unless we want filter etc.
@@ -168,4 +172,4 @@ function attachListeners() {
 
 document
   .getElementById("playlist-button")
-  .addEventListener("click", makePlaylist);
+  .addEventListener("click", makePlaylist); */
