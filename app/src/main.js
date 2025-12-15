@@ -4,65 +4,33 @@ import "./style.css";
 let songs = [
   {
     title: "Mr. Incorrect",
-    artists: ["Malcolm Todd"],
+    artists: "Malcolm Todd",
     album: "Sweetboy",
-    genres: ["Alternative", "Indie", "R&B"],
+    genres: "Alternative",
     url: "https://m.media-amazon.com/images/I/814aISls55L._UF1000,1000_QL80_.jpg",
   },
   {
     title: "Magic Johnson",
-    artists: ["ian"],
+    artists: "ian",
     album: "Valedictorian",
-    genres: ["Hip Hop", "Rap"],
+    genres: "Rap",
     url: "https://i.scdn.co/image/ab67616d0000b273f624d169356e083678be21f2",
   },
   {
     title: "Bags",
-    artists: ["Clairo"],
+    artists: "Clairo",
     album: "Immunity",
-    genres: ["Alternative", "Bedroom", "Indie"],
+    genres: "Alternative",
     url: "https://i.scdn.co/image/ab67616d0000b27333ccb60f9b2785ef691b2fbc",
   },
   {
     title: "Bleed (feat. Omar Apollo)",
-    artists: ["Malcolm Todd", "Omar Apollo"],
+    artists: "Malcolm Todd",
     album: "Malcolm Todd",
-    genres: ["Alternative", "Bedroom", "Indie"],
+    genres: "Alternative",
     url: "https://upload.wikimedia.org/wikipedia/en/b/b3/Malcolm_Todd_cover.png",
   },
 ];
-
-/* document.querySelector("#app").innerHTML = `
-  <div>
-    <a href="https://open.spotify.com/playlist/7lURg77utY7QX9xasBrUMs?si=flNQ_9c6RGmG705Rlp32Zg" target="_blank">
-      <img src="spotify.png" class="logo" alt="Vite logo" />
-    </a>
-    <h1>Selina's Super Cool Playlist Builder!</h1>
-    <p class="read-the-docs">
-        Click on the Spotify logo to view a playlist reccomendation
-      </p>
-    <div class="header">
-      <form>
-        <div class="songform">
-          <label for="title">Song Title: </label>
-          <input type="text" name="title" id="title" required />
-          <label for="artists">Main Artist: </label>
-          <input type="text" name="artists" id="artists" required />
-          <label for="album">Album Name: </label>
-          <input type="text" name="album" id="album" required />
-          <label for="genres">Genres: </label>
-          <input type="text" name="genres" id="genres" required />
-          <label for="img">Album Cover URL: </label>
-          <input type="text" name="url" id="url" required />
-        </div>
-        <div class="songform">
-          <input type="submit" value="Submit" />
-        </div>
-      </form>
-    </div>
-    <div class="container"></div>
-  </div>
-`; */
 
 const DOMSelectors = {
   title: document.getElementById("title"),
@@ -77,33 +45,52 @@ function inject(song) {
   /* const container = document.querySelector(".container"); */
   DOMSelectors.display.insertAdjacentHTML(
     "afterbegin",
-    `<div class="card" data-title=${song.title}>
+    `<div class="card" data-title=${song.title} data-artists=${song.artists}>
       <img class="card-img" src="${song.url}" alt="oops!"/>
       <h2 class="card-header">${song.title} by ${song.artists}</h2>
       <h4 class="card-album">${song.album}</h4>
       <h4 class="card-genres">${song.genres}</h4>
-      <form action="/action_page.php">
-        <label for="cars">Choose a car:</label>
-        <select name="cars" id="cars">
-          <option value="volvo">Volvo</option>
-        </select>
-        <input type="submit" value="Submit">
-      </form>
+      <label for="playlists">Choose a playlist:</label>
+      <select name="playlists" class="playlists" id="playlists">
+        <option value="none">None</option>
+      </select>
+      <span onclick="this.parentElement.style.display = 'none';" class="remove">remove</span>
+    </div>`
+  );
+  attachListeners();
+}
+
+function place(playlist) {
+  document.querySelector(".other-container").insertAdjacentHTML(
+    "beforeend",
+    `<div class="card" data-title=${playlist.playtitle}>
+      <img class="card-img" src="${playlist.playurl}" alt="oops!"/>
+      <h2 class="card-header">${playlist.playtitle}</h2>
+      <div class="list-container" id="${playlist.playtitle}"></div>
       <span onclick="this.parentElement.style.display = 'none';" class="remove">remove</span>
     </div>`
   );
 }
 
-function place(playlist) {
-  document.querySelector(".other-container").insertAdjacentHTML(
-    "afterbegin",
-    `<div class="card" data-title=${playlist.playtitle}>
-      <img class="card-img" src="${playlist.playurl}" alt="oops!"/>
-      <h2 class="card-header">${playlist.playtitle}</h2>
-      <span onclick="this.parentElement.style.display = 'none';" class="remove">remove</span>
-    </div>`
+let genres = ["All", "Alternative", "Country", "Indie", "Jazz", "Pop", "Rap", "Rock"]
+
+function injectFilter(array) {
+  document.querySelector(".header").insertAdjacentHTML(
+    "beforeend",
+    `<select class="genres" id="genres">
+        </select>`
   );
+  array.forEach((genre) => {
+    document
+      .querySelector(".genres")
+      .insertAdjacentHTML(
+        "beforeend",
+        `<option value="${genre}">${genre}</option>`
+      );
+  });
 }
+
+injectFilter(genres);
 
 songs.forEach((song) => inject(song));
 
@@ -114,62 +101,114 @@ function clearFields() {
 
 document.getElementById("songform").addEventListener("submit", function (e) {
   e.preventDefault(); // stops page from refreshing
-  let song = {
+  songs.push({
     title: document.getElementById("title").value,
     artists: document.getElementById("artists").value,
     album: document.getElementById("album").value,
     genres: document.getElementById("genres").value,
     url: document.getElementById("url").value,
-  };
-  inject(song); // add to the page
+  });
+  document.querySelector(".container").innerHTML = "";
+  songs.forEach((song) => inject(song)); // add to the page
   clearFields(); // reset form inputs
 });
 
 function addOption(playlist) {
-  document
-    .querySelector(".select")
-    .insertAdjacentHTML("afterbegin", `<option value="benz">benz</option>`);
+  /* // create option using DOM
+  const newOption = document.createElement('option');
+  const optionText = document.createTextNode('Option Text');
+  // set option text
+  newOption.appendChild(optionText);
+  // and option value
+  newOption.setAttribute('value','Option Value'); */
+  let newOption = {
+    text: playlist, 
+    value: playlist
+  }
+  const selects = document.querySelectorAll('.playlists');
+  /* const selectArr = Array.from(selects); */
+  selects.forEach(select => {/* console.log(select) */
+    const newopp = document.createElement('option');
+    newopp.text = newOption.text;
+    newopp.value = newOption.value;
+    select.appendChild(newopp);
+    /* select.add(newOption,undefined)); */
+  })
+  /* selects.forEach((select) => select.value = "<option value=${playlist}>${playlist}</option>") */
 }
 
-document
-  .getElementById("playlistform")
-  .addEventListener("submit", function (e) {
-    e.preventDefault(); // stops page from refreshing
-    let playlist = {
-      playtitle: document.getElementById("playtitle").value,
-      playurl: document.getElementById("playurl").value,
-    };
-    place(playlist); // add to the page
-    clearFields(); // reset form inputs
-    addOption();
-  });
+/* .insertAdjacentHTML("afterbegin", `<option value="${playlist}">${playlist}</option>`)) */
 
 /* setupCounter(document.querySelector("#counter")); */
 
-/* const list = [];
+const list = [];
 
-function getSongs(event) {
-  //not needed unless we want filter etc.
-  cart.push({
-    name: event.closest(".card").getAttribute("data-title"),
-    price: event.closest(".card").getAttribute("data-price"),
-    quantity: 0,
+function logPlaylist(event, playlist) {
+  list.push({
+    title: event.closest(".card").getAttribute("data-title"),
+    artist: event.closest(".card").getAttribute("data-artists"),
+  })
+  console.log(list);
+  const playlistContainer = document.getElementById(playlist)
+  playlistContainer.innerHTML = "";
+  list.forEach((song) => {
+    playlistContainer.insertAdjacentHTML(
+      "afterbegin",
+      `<li>${song.title} by ${song.artist}</li>`
+    );
+  })
+}
+
+function sort() {
+  const select = document.querySelector(".genres");
+  select.addEventListener("change", function (e) {
+    e.preventDefault;
+    const selection = select.value;
+    document.querySelector(".container").innerHTML = "";
+    if (selection === "All") {
+      songs.forEach((song) => inject(song));
+      attachListeners();
+    } else {
+      songs
+        .filter((song) => song.genres === selection)
+        .forEach((song) => inject(song));
+      attachListeners();
+    }
   });
-  document.querySelector(".list-container").innerHTML = "";
-  cart.forEach((product) => logCart(product));
-  pricing();
 }
 
 function attachListeners() {
-  const buttons = document.querySelectorAll(".playlist-button");
-  const btnArr = Array.from(buttons);
-  btnArr.forEach((btn) =>
-    btn.addEventListener("click", function (event) {
-      getCards(event.target);
+  /* const selectors = document.querySelectorAll('.playlists');
+  const selectArr = Array.from(selectors);
+  selectArr.forEach((selector) =>
+    selector.addEventListener("submit", function (e) {
+      e.preventDefault(); // stops page from refreshing
+      const selectedValue = e.target.value
+      logPlaylist(e.target, selectedValue);
     })
-  );
+  ); */
+  const playlistSelector = document.querySelectorAll('.playlists')
+  playlistSelector.forEach((playlist) => playlist.addEventListener('change', function (e) {
+    logPlaylist(e.target, e.target.value);
+  }))
 }
 
+attachListeners();
+sort();
+
 document
+.getElementById("playlistform")
+.addEventListener("submit", function (e) {
+  e.preventDefault(); // stops page from refreshing
+  let playlist = {
+    playtitle: document.getElementById("playtitle").value,
+    playurl: document.getElementById("playurl").value,
+  }
+  place(playlist); // add to the page
+  clearFields(); // reset form inputs
+  addOption(playlist.playtitle);
+});
+
+/* document
   .getElementById("playlist-button")
   .addEventListener("click", makePlaylist); */
