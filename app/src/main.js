@@ -72,7 +72,16 @@ function place(playlist) {
   );
 }
 
-let genres = ["All", "Alternative", "Country", "Indie", "Jazz", "Pop", "Rap", "Rock"]
+let genres = [
+  "All",
+  "Alternative",
+  "Country",
+  "Indie",
+  "Jazz",
+  "Pop",
+  "Rap",
+  "Rock",
+];
 
 function injectFilter(array) {
   document.querySelector(".header").insertAdjacentHTML(
@@ -122,18 +131,19 @@ function addOption(playlist) {
   // and option value
   newOption.setAttribute('value','Option Value'); */
   let newOption = {
-    text: playlist, 
-    value: playlist
-  }
-  const selects = document.querySelectorAll('.playlists');
+    text: playlist,
+    value: playlist,
+  };
+  const selects = document.querySelectorAll(".playlists");
   /* const selectArr = Array.from(selects); */
-  selects.forEach(select => {/* console.log(select) */
-    const newopp = document.createElement('option');
+  selects.forEach((select) => {
+    /* console.log(select) */
+    const newopp = document.createElement("option");
     newopp.text = newOption.text;
     newopp.value = newOption.value;
     select.appendChild(newopp);
     /* select.add(newOption,undefined)); */
-  })
+  });
   /* selects.forEach((select) => select.value = "<option value=${playlist}>${playlist}</option>") */
 }
 
@@ -147,16 +157,16 @@ function logPlaylist(event, playlist) {
   list.push({
     title: event.closest(".card").getAttribute("data-title"),
     artist: event.closest(".card").getAttribute("data-artists"),
-  })
+  });
   console.log(list);
-  const playlistContainer = document.getElementById(playlist)
+  const playlistContainer = document.getElementById(playlist);
   playlistContainer.innerHTML = "";
   list.forEach((song) => {
     playlistContainer.insertAdjacentHTML(
       "afterbegin",
       `<li>${song.title} by ${song.artist}</li>`
     );
-  })
+  });
 }
 
 function sort() {
@@ -172,7 +182,6 @@ function sort() {
       songs
         .filter((song) => song.genres === selection)
         .forEach((song) => inject(song));
-      attachListeners();
     }
   });
 }
@@ -187,27 +196,29 @@ function attachListeners() {
       logPlaylist(e.target, selectedValue);
     })
   ); */
-  const playlistSelector = document.querySelectorAll('.playlists')
-  playlistSelector.forEach((playlist) => playlist.addEventListener('change', function (e) {
-    logPlaylist(e.target, e.target.value);
-  }))
+  const playlistSelector = document.querySelectorAll(".playlists");
+  playlistSelector.forEach((playlist) =>
+    playlist.addEventListener("change", function (e) {
+      logPlaylist(e.target, e.target.value);
+    })
+  );
 }
 
 attachListeners();
 sort();
 
 document
-.getElementById("playlistform")
-.addEventListener("submit", function (e) {
-  e.preventDefault(); // stops page from refreshing
-  let playlist = {
-    playtitle: document.getElementById("playtitle").value,
-    playurl: document.getElementById("playurl").value,
-  }
-  place(playlist); // add to the page
-  clearFields(); // reset form inputs
-  addOption(playlist.playtitle);
-});
+  .getElementById("playlistform")
+  .addEventListener("submit", function (e) {
+    e.preventDefault(); // stops page from refreshing
+    let playlist = {
+      playtitle: document.getElementById("playtitle").value,
+      playurl: document.getElementById("playurl").value,
+    };
+    place(playlist); // add to the page
+    clearFields(); // reset form inputs
+    addOption(playlist.playtitle);
+  });
 
 /* document
   .getElementById("playlist-button")
