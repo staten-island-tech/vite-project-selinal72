@@ -45,7 +45,7 @@ function inject(song) {
   /* const container = document.querySelector(".container"); */
   DOMSelectors.display.insertAdjacentHTML(
     "afterbegin",
-    `<div class="card" data-title=${song.title} data-artists=${song.artists}>
+    `<div class="card" data-title="${song.title}" data-artists="${song.artists}">
       <img class="card-img" src="${song.url}" alt="oops!"/>
       <h2 class="card-header">${song.title} by ${song.artists}</h2>
       <h4 class="card-album">${song.album}</h4>
@@ -57,13 +57,12 @@ function inject(song) {
       <span onclick="this.parentElement.style.display = 'none';" class="remove">remove</span>
     </div>`
   );
-  attachListeners();
 }
 
 function place(playlist) {
   document.querySelector(".other-container").insertAdjacentHTML(
     "beforeend",
-    `<div class="card" data-title=${playlist.playtitle}>
+    `<div class="card" data-title="${playlist.playtitle}">
       <img class="card-img" src="${playlist.playurl}" alt="oops!"/>
       <h2 class="card-header">${playlist.playtitle}</h2>
       <div class="list-container" id="${playlist.playtitle}"></div>
@@ -71,6 +70,8 @@ function place(playlist) {
     </div>`
   );
 }
+
+const playlistNames = [];
 
 let genres = [
   "All",
@@ -103,6 +104,7 @@ injectFilter(genres);
 
 songs.forEach((song) => inject(song));
 
+
 function clearFields() {
   const inputs = document.querySelectorAll(".input");
   inputs.forEach((input) => (input.value = ""));
@@ -119,6 +121,8 @@ document.getElementById("songform").addEventListener("submit", function (e) {
   });
   document.querySelector(".container").innerHTML = "";
   songs.forEach((song) => inject(song)); // add to the page
+  restoreOptions();
+  attachListeners();
   clearFields(); // reset form inputs
 });
 
@@ -151,17 +155,19 @@ function addOption(playlist) {
 
 /* setupCounter(document.querySelector("#counter")); */
 
-const list = [];
+const playlists = {};
 
-function logPlaylist(event, playlist) {
-  list.push({
+function logPlaylist(event, playlistName) {
+  if (!playlists[playlistName]) {
+    playlists[playlistName] = [];
+  }
+  playlists[playlistName].push({
     title: event.closest(".card").getAttribute("data-title"),
     artist: event.closest(".card").getAttribute("data-artists"),
   });
-  console.log(list);
-  const playlistContainer = document.getElementById(playlist);
+  const playlistContainer = document.getElementById(playlistName);
   playlistContainer.innerHTML = "";
-  list.forEach((song) => {
+  playlists[playlistName].forEach((song) => {
     playlistContainer.insertAdjacentHTML(
       "afterbegin",
       `<li>${song.title} by ${song.artist}</li>`
@@ -177,12 +183,13 @@ function sort() {
     document.querySelector(".container").innerHTML = "";
     if (selection === "All") {
       songs.forEach((song) => inject(song));
-      attachListeners();
     } else {
       songs
         .filter((song) => song.genres === selection)
         .forEach((song) => inject(song));
     }
+    restoreOptions();
+    attachListeners();
   });
 }
 
@@ -204,6 +211,11 @@ function attachListeners() {
   );
 }
 
+function restoreOptions() {
+  playlistNames.forEach((name) => addOption(name));
+}
+
+
 attachListeners();
 sort();
 
@@ -216,6 +228,7 @@ document
       playurl: document.getElementById("playurl").value,
     };
     place(playlist); // add to the page
+    playlistNames.push(playlist.playtitle);
     clearFields(); // reset form inputs
     addOption(playlist.playtitle);
   });

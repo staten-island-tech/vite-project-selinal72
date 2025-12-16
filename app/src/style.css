@@ -127,6 +127,24 @@ h2 {
   transition: all 0.5s;
 }
 
+.list-container {
+  width: 90%;
+  max-height: 10rem;
+  overflow-y: auto;
+  word-wrap: break-word;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.list-container li {
+  margin-bottom: 0.25rem;
+  white-space: normal;
+  overflow-wrap: break-word;
+  font-size: 0.9rem;
+}
+
 .other-container {
   width: 90vw;
   margin: 2rem auto;
